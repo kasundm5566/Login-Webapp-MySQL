@@ -56,7 +56,7 @@ public class Login extends HttpServlet{
     /**
      * @param user
      * Passing a user to validate username and password
-     * @ return status
+     * @return status
      * Returns whether user passed the validation or not
      */
     public boolean Validate(User user) {
@@ -68,7 +68,7 @@ public class Login extends HttpServlet{
     /**
      * @param user
      * Passing a user to validate username and password
-     * @ return status
+     * @return status
      * Returns whether user passed the validation or not
      */
     public boolean ValidateByDB(User user) {
