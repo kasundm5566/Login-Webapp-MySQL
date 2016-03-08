@@ -6,13 +6,17 @@
 package hsenid.webapp;
 
 /**
- *
- * @author Kasun Dinesh
+ * Created by hsenid.
+ * @author hsenid
  */
 public class User {
     private String username;
     private String password;
 
+    /**
+     * @param username username for the new user object
+     * @param password password for the new user object
+     */
     public User(String username, String password) {
         this.username = username;
         this.password = password;

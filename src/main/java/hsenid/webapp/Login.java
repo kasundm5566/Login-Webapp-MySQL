@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- *
+ * Created by hsenid.
  * @author hsenid
  */
 public class Login extends HttpServlet{
@@ -52,31 +52,35 @@ public class Login extends HttpServlet{
         }
 
     }
-    
+
     /**
-     * This method will returns true if the user name is 'test' and password is '123'.
+     * @param user
+     * Passing a user to validate username and password
+     * @ return status
+     * Returns whether user passed the validation or not
      */
-    public boolean Validate(User u) {
+    public boolean Validate(User user) {
         boolean status = false;
-        status = u.getUsername().equals("test") && u.getPassword().equals("123");
+        status = user.getUsername().equals("test") && user.getPassword().equals("123");
         return status;
     }
-    
+
     /**
-     * This method will initialize a database connection and then validate user name
-     * and password using the database.
+     * @param user
+     * Passing a user to validate username and password
+     * @ return status
+     * Returns whether user passed the validation or not
      */
-    public boolean ValidateByDB(User u) {
+    public boolean ValidateByDB(User user) {
         dbc = new DBCon();
         boolean status = false;
         try {
             Connection connection = dbc.CreateConnection(host, database, dbuser, dbpass);
             Statement statement = connection.createStatement();
-            String query = "SELECT Name FROM user_cred WHERE Name=\"" + u.getUsername() + "\" && pass=md5(\"" + u.getPassword() + "\");";
+            String query = "SELECT Name FROM user_cred WHERE Name=\"" + user.getUsername() + "\" && pass=md5(\"" + user.getPassword() + "\");";
             ResultSet result = statement.executeQuery(query);
             status = result.first();
         } catch (Exception e) {
-            //s=e.toString();
         }
         return status;
     }
