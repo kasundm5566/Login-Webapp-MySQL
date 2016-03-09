@@ -28,7 +28,7 @@ public class Login extends HttpServlet {
     String database = "userdata";
     String dbuser = "root";
     String dbpass = "test123";
-    static String error = "User name and password does not match!";
+    static String error = "Error in username or password!";
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
