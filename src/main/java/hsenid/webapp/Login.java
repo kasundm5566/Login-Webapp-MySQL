@@ -18,16 +18,17 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * Created by hsenid.
+ *
  * @author hsenid
  */
-public class Login extends HttpServlet{
-
+public class Login extends HttpServlet {
     User user;
     DBCon dbc;
     String host = "jdbc:mysql://localhost:3306/";
     String database = "userdata";
     String dbuser = "root";
     String dbpass = "test123";
+    static String error = "User name and password does not match!";
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -46,16 +47,14 @@ public class Login extends HttpServlet{
         if (status) {
             resp.sendRedirect("success.jsp");
         } else {
-            req.setAttribute("error_msg", "User name and password does not match!");
+            req.setAttribute("error_msg", error);
             RequestDispatcher rd = getServletContext().getRequestDispatcher("/index.jsp");
             rd.forward(req, resp);
         }
-
     }
 
     /**
-     * @param user
-     * Passing a user to validate username and password
+     * @param user Passing a user to validate username and password
      * @return status
      * Returns whether user passed the validation or not
      */
@@ -66,8 +65,7 @@ public class Login extends HttpServlet{
     }
 
     /**
-     * @param user
-     * Passing a user to validate username and password
+     * @param user Passing a user to validate username and password
      * @return status
      * Returns whether user passed the validation or not
      */
@@ -81,6 +79,7 @@ public class Login extends HttpServlet{
             ResultSet result = statement.executeQuery(query);
             status = result.first();
         } catch (Exception e) {
+            error = "Something bad happened. Try again later.";
         }
         return status;
     }
