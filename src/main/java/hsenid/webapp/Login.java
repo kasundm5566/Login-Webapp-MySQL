@@ -38,6 +38,7 @@ public class Login extends HttpServlet {
         if(status){
             resp.sendRedirect("success.jsp");
         }else{
+            error = "User name and password does not match!";
             req.setAttribute("error_msg", "User name and password does not match!");
             RequestDispatcher rd = getServletContext().getRequestDispatcher("/index.jsp");
             rd.forward(req, resp);
@@ -47,6 +48,7 @@ public class Login extends HttpServlet {
         if (status) {
             resp.sendRedirect("success.jsp");
         } else {
+            error = "User name and password does not match!";
             req.setAttribute("error_msg", error);
             RequestDispatcher rd = getServletContext().getRequestDispatcher("/index.jsp");
             rd.forward(req, resp);

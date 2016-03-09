@@ -19,7 +19,7 @@ public class DBCon {
      */
     public Connection CreateConnection(String host, String database, String dbuser, String dbpass) {
         try {
-            Class.forName("com.mysql.jdbc.Drive").newInstance();
+            Class.forName("com.mysql.jdbc.Driver").newInstance();
             connection = (Connection) DriverManager.getConnection(host + database, dbuser, dbpass);
         } catch (Exception ex) {
             Login.error="Something bad happened! Try again later.";
