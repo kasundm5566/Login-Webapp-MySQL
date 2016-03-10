@@ -44,14 +44,18 @@ public class Login extends HttpServlet {
             rd.forward(req, resp);
         }*/
 
-        boolean status = ValidateByDB(user);
-        if (status) {
-            resp.sendRedirect("success.jsp");
-        } else {
-            error = "User name and password does not match!";
-            req.setAttribute("error_msg", error);
-            RequestDispatcher rd = getServletContext().getRequestDispatcher("/index.jsp");
-            rd.forward(req, resp);
+        try {
+            boolean status = ValidateByDB(user);
+            if (status) {
+                resp.sendRedirect("success.jsp");
+            } else {
+                error = "User name and password does not match!";
+                req.setAttribute("error_msg", error);
+                RequestDispatcher rd = getServletContext().getRequestDispatcher("/index.jsp");
+                rd.forward(req, resp);
+            }
+        } catch (Exception e) {
+            error = "Something bad happened. Try again later.";
         }
     }
 
@@ -71,17 +75,26 @@ public class Login extends HttpServlet {
      * @return status
      * Returns whether user passed the validation or not
      */
-    public boolean ValidateByDB(User user) {
+    public boolean ValidateByDB(User user) throws Exception {
         dbc = new DBCon();
         boolean status = false;
+        Statement statement = null;
+        ResultSet result = null;
         try {
             Connection connection = dbc.CreateConnection(host, database, dbuser, dbpass);
-            Statement statement = connection.createStatement();
+            statement = connection.createStatement();
             String query = "SELECT Name FROM user_cred WHERE Name=\"" + user.getUsername() + "\" && pass=md5(\"" + user.getPassword() + "\");";
-            ResultSet result = statement.executeQuery(query);
+            result = statement.executeQuery(query);
             status = result.first();
         } catch (Exception e) {
             error = "Something bad happened. Try again later.";
+        } finally {
+            if (statement != null) {
+                statement.close();
+            }
+            if (result != null) {
+                result.close();
+            }
         }
         return status;
     }
